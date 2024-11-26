@@ -1,29 +1,21 @@
-const mongoose = require('mongoose');
-// Define the MongoDB connection URL 
-const mongoURL = 'mongodb://127.0.0.1:27017/hotels' // Replace 'mydatabase name
+const express = require('express')
+const app = express()
+const db = require('./db')
+// require('dotenv').config();
 
-// set up MongoDB connection 
-mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // req.body
+// const PORT = process.env.PORT || 3000;
+
+
+// Import the router files
+const personRoutes = require('./router/personRoutes');
+const menuRoutes = require('./router/menuRoutes');
+// Use the routers
+app.use('/person', personRoutes);
+app.use('/manu', menuRoutes);
+
+
+app.listen(3000, () => {
+  console.log("listening on port 3000");
 })
-
-// Get  the default connection 
-// Mongoos maintains a default  connection object representing the MongoDB connection
-const db = mongoose.connection;
-
-// Define event listeners for database connection
-db.on('connected', () => {
-    console.log('Connected to MongoDB Server');
-});
-
-db.on('error', (err) => {
-    console.error('MongoDB Connection error:', err);
-});
-
-db.on('disconnected', () => {
-    console.log('MongoDB disconnected');
-});
-
-// Export the database connection
-module.exports = db;
