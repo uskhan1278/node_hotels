@@ -13,7 +13,7 @@ const personRoutes = require('./router/personRoutes');
 const menuRoutes = require('./router/menuRoutes');
 // Use the routers
 app.use('/person', personRoutes);
-app.use('/manu', menuRoutes);
+app.use('/menu', menuRoutes);
 
 
 app.listen(3000, () => {
