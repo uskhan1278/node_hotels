@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// Define the Person schema
-const personSchema = new mongoose.Schema({
+// Define the employee schema
+const employeeSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true
@@ -33,6 +33,6 @@ const personSchema = new mongoose.Schema({
 
 });
 
-// Create Person model
-const Person = mongoose.model('Person', personSchema);
-module.exports = Person;
+// Create employee model
+const Employee = mongoose.model('Employee', employeeSchema);
+module.exports = Employee;
