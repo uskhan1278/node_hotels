@@ -9,10 +9,10 @@ app.use(bodyParser.json()); // req.body
 
 
 // Import the router files
-const personRoutes = require('./router/personRoutes');
+const employeeRoutes = require('./router/employeeRoutes');
 const menuRoutes = require('./router/menuRoutes');
 // Use the routers
-app.use('/person', personRoutes);
+app.use('/employee', employeeRoutes);
 app.use('/menu', menuRoutes);
 
 
