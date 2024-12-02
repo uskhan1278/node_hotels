@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router();
-const Person = require('./../models/person')
+const Employee = require('../models/employee')
 
-// Submit Person Data 
+// Submit employee Data 
 router.post('/', async (req, res) => {
     try {
-      const data = req.body // Assuming the request body contains the person data
+      const data = req.body // Assuming the request body contains the employee data
   
-      // Create a new Person document using the Mongoose model
-      const newPerson = new Person(data)
+      // Create a new employee document using the Mongoose model
+      const newEmployee = new Employee(data)
   
-      // Save the new person to the database 
-      const response = await newPerson.save();
+      // Save the new employee to the database 
+      const response = await newEmployee.save();
       console.log('Data Saved');
       res.status(200).json(response)
     } 
@@ -21,10 +21,10 @@ router.post('/', async (req, res) => {
     }
   })
 
-// GET Method to get person
+// GET Method to get employee
 router.get('/',async (req, res) => {
     try{
-      const data = await Person.find()
+      const data = await Employee.find()
       console.log('data fetched')
       res.status(200).json(data) 
     }catch(err){
@@ -34,13 +34,13 @@ router.get('/',async (req, res) => {
   })
 
 
-// Get Person Data According to Work Type
+// Get employee Data According to Work Type
 router.get('/:workType', async (req, res) => {
     try{
       const workType = req.params.workType;
       if(workType == 'chef' || workType == 'manager' || workType == 'waiter'){
   
-        const response = await Person.find({work: workType});
+        const response = await Employee.find({work: workType});
         console.log('response fatched');
         res.status(200).json(response);
       }else{
@@ -52,19 +52,19 @@ router.get('/:workType', async (req, res) => {
     }
   })
 
-  // Update Person Data
+  // Update employee Data
   router.put('/:id', async(req, res) =>{
     try{
-        const personId = req.params.id; // Exteact the Id from the URL parameter
-        const updatePersonData = req.body; //Updated data for the person
+        const employeeId = req.params.id; // Exteact the Id from the URL parameter
+        const updateEmployeeData = req.body; //Updated data for the employee
 
-        const response = await Person.findByIdAndUpdate(personId, updatePersonData,  {
+        const response = await Employee.findByIdAndUpdate(employeeId, updateEmployeeData,  {
           new: true, // Return the updated document 
           runValidators: true, // Run Mongoose validation
         })
 
         if(!response){
-          return res.status(404).json({error: 'Person not found'});
+          return res.status(404).json({error: 'employee not found'});
         }
 
         console.log('Data Updated');
@@ -79,15 +79,15 @@ router.get('/:workType', async (req, res) => {
 // Delete Peron Data
 router.delete('/:id', async(req, res) => {
   try{
-    const personId = req.params.id; // Exteact the Id from the URL parameter
+    const employeeId = req.params.id; // Exteact the Id from the URL parameter
 
-    // Assuming you have a Person model
-    const response = await Person.findByIdAndDelete(personId);
+    // Assuming you have a employee model
+    const response = await Employee.findByIdAndDelete(employeeId);
     if(!response){
-      return res.status(404).json({error:'Person not found' });
+      return res.status(404).json({error:'employee not found' });
     }
     console.log('Data Delete');
-    res.status(200).json({message: 'Person Deleted Successfully'});
+    res.status(200).json({message: 'employee Deleted Successfully'});
   }catch(err){
     console.log(err);
     res.status(500).json({error: 'Internal Sever Error'});
